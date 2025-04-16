@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "recipe")
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recipe_seq")
@@ -17,11 +17,11 @@ public class Recipe {
     private String category;
 
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "recipe-ingredient",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+            name = "recipe_ingredient", // Junction table name
+            joinColumns = @JoinColumn(name = "recipe_id"), // Foreign key for Recipe
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id") // Foreign key for Ingredient
     )
     private List<Ingredient> ingredients;
 
